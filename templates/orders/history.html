@@ -2,37 +2,151 @@
 
 {% block title %}Order history - ShopSphere{% endblock %}
 
-{% block content %}
-<div class="section-card">
-    <h1 class="h4 mb-4">Order history</h1>
+{% block body_class %}page-orders-history{% endblock %}
 
-    {% if orders %}
-        <div class="table-responsive">
-            <table class="table align-middle">
-                <thead>
-                    <tr>
-                        <th>Order</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        <th>Date</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in orders %}
+{% block extra_css %}
+<style>
+    .page-orders-history .orders-history-wrap {
+        padding: 34px 0 54px;
+    }
+
+    .page-orders-history .orders-history-card {
+        border: 1px solid #e7eaee;
+        border-radius: 14px;
+        background: #ffffff;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+        padding: 20px;
+    }
+
+    .page-orders-history .orders-title {
+        margin: 0 0 6px;
+        font-size: clamp(1.55rem, 2.4vw, 2rem);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .page-orders-history .orders-subtitle {
+        margin: 0 0 18px;
+        color: #667085;
+    }
+
+    .page-orders-history .orders-table {
+        margin-bottom: 0;
+    }
+
+    .page-orders-history .orders-table thead th {
+        color: #475467;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        border-bottom: 1px solid #e7eaee;
+        padding: 12px 10px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .page-orders-history .orders-table tbody td {
+        padding: 14px 10px;
+        border-bottom: 1px solid #eef1f4;
+        vertical-align: middle;
+    }
+
+    .page-orders-history .orders-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .page-orders-history .order-id {
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .page-orders-history .order-status {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        border: 1px solid #dbe2ea;
+        color: #344054;
+        background: #f8fafc;
+    }
+
+    .page-orders-history .order-total {
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .page-orders-history .order-date {
+        color: #475467;
+        white-space: nowrap;
+    }
+
+    .page-orders-history .view-order-btn {
+        border-radius: 10px;
+        padding: 6px 12px;
+        font-weight: 500;
+    }
+
+    .page-orders-history .orders-empty {
+        margin: 0;
+        border-radius: 12px;
+        background: #f8fafc;
+        border-color: #e2e8f0;
+        color: #475467;
+    }
+
+    @media (max-width: 768px) {
+        .page-orders-history .orders-history-wrap {
+            padding: 22px 0 42px;
+        }
+
+        .page-orders-history .orders-history-card {
+            padding: 16px 14px;
+        }
+
+        .page-orders-history .orders-table thead th,
+        .page-orders-history .orders-table tbody td {
+            padding: 10px 8px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="orders-history-wrap">
+    <div class="orders-history-card">
+        <h1 class="orders-title">Order history</h1>
+        <p class="orders-subtitle">Track your recent purchases and check current status.</p>
+
+        {% if orders %}
+            <div class="table-responsive">
+                <table class="table align-middle orders-table">
+                    <thead>
                         <tr>
-                            <td>#{{ order.id }}</td>
-                            <td>{{ order.get_status_display }}</td>
-                            <td>Rs. {{ order.total_amount }}</td>
-                            <td>{{ order.created_at|date:"M d, Y" }}</td>
-                            <td><a class="btn btn-sm btn-outline-dark" href="{% url 'orders:detail' order.id %}">View</a></td>
+                            <th>Order</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th></th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <div class="alert alert-info">No orders yet.</div>
-    {% endif %}
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td class="order-id">#{{ order.id }}</td>
+                                <td><span class="order-status">{{ order.get_status_display }}</span></td>
+                                <td class="order-total">Rs. {{ order.total_amount }}</td>
+                                <td class="order-date">{{ order.created_at|date:"M d, Y" }}</td>
+                                <td><a class="btn btn-sm btn-outline-dark view-order-btn" href="{% url 'orders:detail' order.id %}">View</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info orders-empty">No orders yet.</div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

@@ -2,16 +2,169 @@
 
 {% block title %}Login - ShopSphere{% endblock %}
 
+{% block body_class %}page-login{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-login {
+        --auth-black: #101418;
+        --auth-white: #ffffff;
+        --auth-gray-50: #f6f7f8;
+        --auth-gray-100: #e8ebef;
+        --auth-gray-500: #5f6975;
+        --auth-shadow: 0 18px 40px rgba(17, 24, 39, 0.08);
+    }
+
+    .page-login .navbar,
+    .page-login .footer {
+        display: none !important;
+    }
+
+    .page-login main {
+        min-height: 100vh;
+    }
+
+    .page-login .auth-wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 72px 0 88px;
+        background: linear-gradient(to bottom, #ffffff 0%, var(--auth-gray-50) 100%);
+    }
+
+    .page-login .auth-container {
+        max-width: 1120px;
+    }
+
+    .page-login .auth-card {
+        width: 100%;
+        max-width: 460px;
+        margin: 0 auto;
+        padding: 36px 32px;
+        background: var(--auth-white);
+        border: 1px solid var(--auth-gray-100);
+        border-radius: 18px;
+        box-shadow: var(--auth-shadow);
+    }
+
+    .page-login .auth-title {
+        margin: 0 0 10px;
+        font-size: 2rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--auth-black);
+        text-align: center;
+    }
+
+    .page-login .auth-subtitle {
+        margin: 0 0 24px;
+        color: var(--auth-gray-500);
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .page-login .auth-form p {
+        margin-bottom: 14px;
+    }
+
+    .page-login .auth-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--auth-black);
+        font-size: 0.95rem;
+    }
+
+    .page-login .auth-form input {
+        width: 100%;
+        border: 1px solid #d3d9e1;
+        border-radius: 10px;
+        padding: 11px 13px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        background: #ffffff;
+    }
+
+    .page-login .auth-form input:focus {
+        border-color: var(--auth-black);
+        box-shadow: 0 0 0 3px rgba(16, 20, 24, 0.1);
+    }
+
+    .page-login .auth-form ul.errorlist {
+        list-style: none;
+        margin: 8px 0 0;
+        padding: 0;
+        color: #b42318;
+        font-size: 0.85rem;
+    }
+
+    .page-login .auth-btn {
+        width: 100%;
+        margin-top: 8px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--auth-black);
+        color: var(--auth-white);
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 12px 18px;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .page-login .auth-btn:hover {
+        background: #1f252d;
+        transform: translateY(-1px);
+    }
+
+    .page-login .auth-link {
+        margin-top: 16px;
+        text-align: center;
+    }
+
+    .page-login .auth-link a {
+        color: #1f2937;
+        text-decoration: none;
+        border-bottom: 1px solid #c5ccd7;
+    }
+
+    .page-login .auth-link a:hover {
+        color: #000000;
+        border-bottom-color: #000000;
+    }
+
+    @media (max-width: 576px) {
+        .page-login .auth-wrap {
+            padding: 48px 0 60px;
+            min-height: calc(100vh - 250px);
+        }
+
+        .page-login .auth-card {
+            padding: 28px 22px;
+            border-radius: 14px;
+        }
+
+        .page-login .auth-title {
+            font-size: 1.7rem;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h1 class="h4 mb-3">Login</h1>
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-        <p class="mt-3 mb-0"><a href="{% url 'accounts:password_reset' %}">Forgot your password?</a></p>
+<section class="auth-wrap">
+        <div class="container auth-container">
+                <div class="auth-card">
+                        <h1 class="auth-title">Welcome Back</h1>
+                        <p class="auth-subtitle">Sign in to continue your shopping journey.</p>
+                        <form method="post" novalidate class="auth-form">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="auth-btn">Login</button>
+                        </form>
+                        <p class="auth-link"><a href="{% url 'accounts:password_reset' %}">Forgot your password?</a></p>
+                </div>
     </div>
-</div>
+</section>
 {% endblock %}

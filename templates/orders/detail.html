@@ -2,39 +2,200 @@
 
 {% block title %}Order #{{ order.id }} - ShopSphere{% endblock %}
 
-{% block content %}
-<h1 class="h4 mb-3">Order #{{ order.id }}</h1>
-<p class="text-muted">Status: {{ order.get_status_display }} | Payment: {{ order.get_payment_status_display }}</p>
+{% block body_class %}page-order-detail{% endblock %}
 
-<div class="row">
-    <div class="col-lg-7">
-        <div class="card mb-3">
-            <div class="card-body">
-                <h2 class="h6">Items</h2>
-                <ul class="list-unstyled mb-0">
-                    {% for item in order.items.all %}
-                        <li class="d-flex justify-content-between">
-                            <span>{{ item.product.name }} x {{ item.quantity }}</span>
-                            <span>Rs. {{ item.get_total_price }}</span>
-                        </li>
-                    {% endfor %}
-                </ul>
+{% block extra_css %}
+<style>
+    .page-order-detail .order-detail-page {
+        padding: 32px 0 54px;
+    }
+
+    .page-order-detail .order-detail-shell {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 14px;
+    }
+
+    .page-order-detail .order-head {
+        margin-bottom: 20px;
+    }
+
+    .page-order-detail .order-title {
+        margin: 0 0 8px;
+        font-size: clamp(1.6rem, 2.8vw, 2.1rem);
+        letter-spacing: -0.02em;
+    }
+
+    .page-order-detail .order-meta {
+        margin: 0;
+        color: #667085;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .page-order-detail .status-pill,
+    .page-order-detail .payment-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        border: 1px solid #dbe2ea;
+        color: #344054;
+        background: #f8fafc;
+    }
+
+    .page-order-detail .order-card {
+        border: 1px solid #e7eaee;
+        border-radius: 14px;
+        background: #ffffff;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+        height: 100%;
+    }
+
+    .page-order-detail .order-card-body {
+        padding: 20px;
+    }
+
+    .page-order-detail .card-title-sm {
+        margin-bottom: 14px;
+        font-size: 1.04rem;
+        font-weight: 700;
+    }
+
+    .page-order-detail .order-items-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .page-order-detail .order-items-list li {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 11px 0;
+        border-bottom: 1px solid #eef1f4;
+    }
+
+    .page-order-detail .order-items-list li:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .page-order-detail .item-name {
+        color: #111827;
+    }
+
+    .page-order-detail .item-price {
+        color: #111827;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .page-order-detail .shipping-lines {
+        margin: 0;
+    }
+
+    .page-order-detail .shipping-lines p {
+        margin: 0 0 6px;
+        color: #475467;
+    }
+
+    .page-order-detail .shipping-lines p:last-child {
+        margin-bottom: 0;
+    }
+
+    .page-order-detail .order-total-row {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid #e7eaee;
+        font-size: 1.07rem;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .page-order-detail .order-actions {
+        margin-top: 18px;
+    }
+
+    .page-order-detail .order-actions .btn {
+        border-radius: 10px;
+        padding: 10px 14px;
+    }
+
+    @media (max-width: 768px) {
+        .page-order-detail .order-detail-page {
+            padding: 24px 0 42px;
+        }
+
+        .page-order-detail .order-detail-shell {
+            padding: 0 10px;
+        }
+
+        .page-order-detail .order-card-body {
+            padding: 16px;
+        }
+
+        .page-order-detail .order-items-list li {
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="order-detail-page">
+    <div class="order-detail-shell">
+        <div class="order-head">
+            <h1 class="order-title">Order #{{ order.id }}</h1>
+            <p class="order-meta">
+                <span>Status:</span>
+                <span class="status-pill">{{ order.get_status_display }}</span>
+                <span>Payment:</span>
+                <span class="payment-pill">{{ order.get_payment_status_display }}</span>
+            </p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-xl-6 col-lg-7">
+                <div class="order-card">
+                    <div class="order-card-body">
+                        <h2 class="card-title-sm">Items</h2>
+                        <ul class="order-items-list">
+                            {% for item in order.items.all %}
+                                <li>
+                                    <span class="item-name">{{ item.product.name }} x {{ item.quantity }}</span>
+                                    <span class="item-price">Rs. {{ item.get_total_price }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5">
+                <div class="order-card">
+                    <div class="order-card-body">
+                        <h2 class="card-title-sm">Shipping</h2>
+                        <div class="shipping-lines">
+                            <p>{{ order.address.full_name }}</p>
+                            <p>{{ order.address.line1 }}</p>
+                            {% if order.address.line2 %}<p>{{ order.address.line2 }}</p>{% endif %}
+                            <p>{{ order.address.city }}, {{ order.address.state }} {{ order.address.postal_code }}</p>
+                            <p>{{ order.address.country }}</p>
+                            <p>{{ order.address.phone_number }}</p>
+                        </div>
+                        <div class="order-total-row">Total: Rs. {{ order.total_amount }}</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-5">
-        <div class="card">
-            <div class="card-body">
-                <h2 class="h6">Shipping</h2>
-                <p class="mb-1">{{ order.address.full_name }}</p>
-                <p class="mb-1">{{ order.address.line1 }}</p>
-                {% if order.address.line2 %}<p class="mb-1">{{ order.address.line2 }}</p>{% endif %}
-                <p class="mb-1">{{ order.address.city }}, {{ order.address.state }} {{ order.address.postal_code }}</p>
-                <p class="mb-1">{{ order.address.country }}</p>
-                <p class="mb-0">{{ order.address.phone_number }}</p>
-                <hr>
-                <p class="fw-semibold mb-0">Total: Rs. {{ order.total_amount }}</p>
-            </div>
+
+        <div class="order-actions">
+            <a href="{% url 'orders:history' %}" class="btn btn-outline-dark">Back to order history</a>
         </div>
     </div>
 </div>

@@ -7,55 +7,280 @@
     <title>{% block title %}ShopSphere{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="{% static 'css/site.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-</head>
-<body>
-<div class="bg-orbit bg-orbit--one"></div>
-<div class="bg-orbit bg-orbit--two"></div>
+    <style>
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
 
-<nav class="navbar navbar-expand-lg navbar-light navbar-glass">
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        .navbar .navbar-nav {
+            gap: 10px;
+        }
+
+        .navbar .nav-link {
+            font-size: 1.03rem;
+            font-weight: 500;
+            padding: 8px 12px !important;
+        }
+
+        .navbar .navbar-brand {
+            font-size: 1.7rem;
+            font-weight: 700;
+        }
+
+        .navbar .btn.btn-primary {
+            font-size: 1rem;
+            padding: 10px 16px;
+        }
+
+        .footer {
+            background: #0f141a !important;
+            color: #e5e7eb;
+            border-top: 1px solid #202733;
+            padding: 60px 0 26px;
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+
+        .footer .row {
+            row-gap: 28px;
+            align-items: flex-start;
+        }
+
+        .footer .col-lg-4 p {
+            max-width: 380px;
+            color: #c6ced9;
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .footer h6,
+        .footer .fw-bold,
+        .footer .fs-5,
+        .footer .bi-shop {
+            color: #ffffff !important;
+        }
+
+        .footer .list-unstyled {
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer .list-unstyled li {
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #d4dae4;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+        }
+
+        .footer .d-flex.gap-3 a {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a2230;
+            border: 1px solid #2b3749;
+            color: #ffffff;
+        }
+
+        .footer .d-flex.gap-3 a:hover {
+            background: #273244;
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid #263041;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            color: #aeb6c4;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .navbar-nav {
+                gap: 2px;
+            }
+
+            .navbar .nav-link {
+                font-size: 0.98rem;
+            }
+
+            .footer {
+                margin-top: 44px;
+                padding-top: 48px;
+            }
+
+            .footer .col-lg-4 p {
+                max-width: 100%;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<!-- ===== NAVBAR (FIXED) ===== -->
+<nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'core:home' %}">ShopSphere</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'core:home' %}">
+            <i class="bi bi-shop me-2"></i>
+            ShopSphere
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto align-items-lg-center">
-                <li class="nav-item"><a class="nav-link" href="{% url 'products:list' %}">Products</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'cart:detail' %}">Cart <span class="badge rounded-pill text-bg-light">{{ cart|length }}</span></a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products:list' %}">
+                        <i class="bi bi-grid me-1"></i>
+                        Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link position-relative" href="{% url 'cart:detail' %}">
+                        <i class="bi bi-bag me-1"></i>
+                        Cart 
+                        {% if cart|length > 0 %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+                                {{ cart|length }}
+                            </span>
+                        {% endif %}
+                    </a>
+                </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'orders:history' %}">Orders</a></li>
-                    {% if user.is_seller %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'sellers:dashboard' %}">Seller</a></li>
-                    {% endif %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:profile' %}">Profile</a></li>
                     <li class="nav-item">
-                        <form method="post" action="{% url 'accounts:logout' %}" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-link nav-link p-0">Logout</button>
-                        </form>
+                        <a class="nav-link" href="{% url 'orders:history' %}">
+                            <i class="bi bi-clock-history me-1"></i>
+                            Orders
+                        </a>
+                    </li>
+                    {% if user.is_seller %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'sellers:dashboard' %}">
+                                <i class="bi bi-speedometer2 me-1"></i>
+                                Seller
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i>
+                            {{ user.first_name|default:user.email }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">
+                                <i class="bi bi-person me-2"></i>Profile
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{% url 'accounts:logout' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
-                    <li class="nav-item"><a class="btn btn-brand" href="{% url 'accounts:signup' %}">Sign up</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="{% url 'accounts:signup' %}">
+                            <i class="bi bi-person-plus me-1"></i>
+                            Sign up
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
-<main class="container py-4 py-lg-5">
+<!-- ===== MAIN CONTENT ===== -->
+<main>
     {% block content %}{% endblock %}
 </main>
 
-<footer class="footer border-top">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
-        <span>ShopSphere - Crafted for modern commerce.</span>
-        <span class="small">Secure checkout | Fast delivery | Curated picks</span>
+<!-- ===== FOOTER (FIXED - 3 COLUMNS) ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="row g-4">
+            <!-- COLUMN 1: Brand -->
+            <div class="col-lg-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-shop me-2 fs-4"></i>
+                    <span class="fw-bold fs-5">ShopSphere</span>
+                </div>
+                <p class="mb-3">The future of e-commerce. Shop with confidence, enjoy fast delivery, and experience premium customer service.</p>
+                <div class="d-flex gap-3">
+                    <a href="#"><i class="bi bi-facebook fs-5"></i></a>
+                    <a href="#"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#"><i class="bi bi-instagram fs-5"></i></a>
+                    <a href="#"><i class="bi bi-linkedin fs-5"></i></a>
+                </div>
+            </div>
+            
+            <!-- COLUMN 2: Quick Links -->
+            <div class="col-lg-4 col-md-6">
+                <h6>Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'products:list' %}">Products</a></li>
+                    <li><a href="{% url 'cart:detail' %}">Shopping Cart</a></li>
+                    <li><a href="{% url 'orders:history' %}">Order History</a></li>
+                    <li><a href="{% url 'accounts:profile' %}">My Account</a></li>
+                </ul>
+            </div>
+            
+            <!-- COLUMN 3: Support -->
+            <div class="col-lg-4 col-md-6">
+                <h6>Support</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 ShopSphere. All rights reserved.</p>
+        </div>
     </div>
 </footer>
 

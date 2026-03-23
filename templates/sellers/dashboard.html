@@ -2,41 +2,258 @@
 
 {% block title %}Seller dashboard - ShopSphere{% endblock %}
 
+{% block body_class %}page-seller-dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-seller-dashboard {
+        background:
+            radial-gradient(circle at 90% -10%, rgba(10, 132, 255, 0.08), transparent 45%),
+            radial-gradient(circle at 5% 30%, rgba(0, 0, 0, 0.03), transparent 30%),
+            #f7f9fc;
+    }
+
+    .seller-shell {
+        max-width: 1160px;
+        margin: 34px auto 56px;
+        padding: 0 16px;
+    }
+
+    .seller-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1f2937 100%);
+        color: #f8fafc;
+        border-radius: 18px;
+        padding: 26px 28px;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
+        margin-bottom: 18px;
+    }
+
+    .seller-hero h1 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 750;
+        letter-spacing: -0.02em;
+    }
+
+    .seller-hero p {
+        margin: 8px 0 0;
+        color: rgba(226, 232, 240, 0.95);
+        font-size: 0.98rem;
+    }
+
+    .seller-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        height: 100%;
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+    }
+
+    .seller-card .card-body {
+        padding: 20px;
+    }
+
+    .stat-label {
+        font-size: 0.82rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #64748b;
+        margin-bottom: 8px;
+        font-weight: 700;
+    }
+
+    .stat-value {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: #0f172a;
+        line-height: 1.1;
+    }
+
+    .quick-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 6px;
+    }
+
+    .quick-actions .btn {
+        min-width: 140px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .table-shell {
+        margin-top: 18px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+        overflow: hidden;
+    }
+
+    .table-shell .table-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid #eef2f7;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .table-shell .table-header h2 {
+        margin: 0;
+        font-size: 1.08rem;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .seller-table {
+        margin: 0;
+    }
+
+    .seller-table thead th {
+        border-bottom-width: 1px;
+        border-color: #e5e7eb;
+        color: #475569;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        font-weight: 700;
+        padding: 14px 20px;
+        background: #f8fafc;
+    }
+
+    .seller-table tbody td {
+        padding: 14px 20px;
+        border-color: #eef2f7;
+        color: #0f172a;
+        vertical-align: middle;
+    }
+
+    .seller-table tbody tr:hover {
+        background: #f8fbff;
+    }
+
+    .product-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+    }
+
+    .product-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #111827;
+        box-shadow: 0 0 0 5px rgba(17, 24, 39, 0.08);
+    }
+
+    .orders-badge {
+        display: inline-flex;
+        min-width: 34px;
+        justify-content: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #111827;
+        color: #ffffff;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .empty-row {
+        text-align: center;
+        color: #64748b;
+        padding: 36px 20px !important;
+        font-weight: 500;
+    }
+
+    @media (max-width: 991px) {
+        .seller-shell {
+            margin-top: 26px;
+        }
+
+        .seller-hero {
+            padding: 22px 20px;
+        }
+
+        .seller-card .card-body {
+            padding: 18px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .seller-shell {
+            padding: 0 12px;
+            margin-bottom: 40px;
+        }
+
+        .seller-hero h1 {
+            font-size: 1.32rem;
+        }
+
+        .quick-actions .btn {
+            width: 100%;
+        }
+
+        .seller-table thead th,
+        .seller-table tbody td {
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="section-card">
-    <h1 class="h4 mb-4">Seller dashboard</h1>
-    <div class="row g-3">
-        <div class="col-md-4">
-            <div class="card h-100">
+<div class="seller-shell">
+    <section class="seller-hero">
+        <h1>Seller Dashboard</h1>
+        <p>Track your product performance, monitor incoming orders, and manage your store quickly.</p>
+    </section>
+
+    <div class="row g-3 g-lg-4">
+        <div class="col-md-6 col-xl-4">
+            <div class="seller-card card">
                 <div class="card-body">
-                    <h2 class="h6">Products</h2>
-                    <p class="display-6 mb-0">{{ product_count }}</p>
+                    <p class="stat-label">Total Products</p>
+                    <p class="stat-value">{{ product_count }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card h-100">
+        <div class="col-md-6 col-xl-4">
+            <div class="seller-card card">
                 <div class="card-body">
-                    <h2 class="h6">Orders</h2>
-                    <p class="display-6 mb-0">{{ order_count }}</p>
+                    <p class="stat-label">Total Orders</p>
+                    <p class="stat-value">{{ order_count }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card h-100">
+        <div class="col-xl-4">
+            <div class="seller-card card">
                 <div class="card-body">
-                    <h2 class="h6">Quick actions</h2>
-                    <a class="btn btn-brand mt-2" href="{% url 'sellers:product_add' %}">Add product</a>
-                    <a class="btn btn-outline-dark mt-2" href="{% url 'sellers:orders' %}">View orders</a>
+                    <p class="stat-label">Quick Actions</p>
+                    <div class="quick-actions">
+                        <a class="btn btn-dark" href="{% url 'sellers:product_add' %}">
+                            <i class="bi bi-plus-lg me-1"></i>Add Product
+                        </a>
+                        <a class="btn btn-outline-dark" href="{% url 'sellers:orders' %}">
+                            <i class="bi bi-receipt me-1"></i>View Orders
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="mt-4">
-        <h2 class="h5">Top products</h2>
+    <section class="table-shell">
+        <div class="table-header">
+            <h2>Top Products</h2>
+        </div>
         <div class="table-responsive">
-            <table class="table align-middle">
+            <table class="table align-middle seller-table">
                 <thead>
                     <tr>
                         <th>Product</th>
@@ -47,18 +264,23 @@
                 <tbody>
                     {% for product in top_products %}
                         <tr>
-                            <td>{{ product.name }}</td>
+                            <td>
+                                <span class="product-pill">
+                                    <span class="product-dot"></span>
+                                    {{ product.name }}
+                                </span>
+                            </td>
                             <td>{{ product.category.name }}</td>
-                            <td>{{ product.order_item_count }}</td>
+                            <td><span class="orders-badge">{{ product.order_item_count }}</span></td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="3" class="text-muted">No sales yet.</td>
+                            <td colspan="3" class="empty-row">No sales yet. Your best-selling products will appear here.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-    </div>
+    </section>
 </div>
 {% endblock %}

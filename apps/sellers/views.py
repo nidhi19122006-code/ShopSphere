@@ -1,8 +1,10 @@
 from django.db.models import Count, Q
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DeleteView, ListView, TemplateView, UpdateView
 
-from apps.orders.models import OrderItem
+from apps.orders.models import Order, OrderItem
 from apps.products.models import Product
 
 from .forms import SellerProductForm
@@ -78,3 +80,19 @@ class SellerOrdersView(SellerRequiredMixin, ListView):
 			.select_related("order", "product")
 			.order_by("-order__created_at")
 		)
+
+
+class SellerOrderApproveView(SellerRequiredMixin, View):
+	def post(self, request, order_id):
+		order = get_object_or_404(
+			Order.objects.filter(
+				Q(items__seller=request.user) | Q(items__product__seller=request.user)
+			).distinct(),
+			id=order_id,
+		)
+
+		if order.status == Order.STATUS_PENDING:
+			order.status = Order.STATUS_SHIPPED
+			order.save(update_fields=["status", "updated_at"])
+
+		return redirect("sellers:orders")

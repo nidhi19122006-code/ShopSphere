@@ -1,116 +1,498 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Welcome - ShopSphere{% endblock %}
+{% block title %}ShopSphere - Modern E-commerce Platform{% endblock %}
+
+{% block body_class %}page-landing{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/landing.css' %}" rel="stylesheet">
+<style>
+    .page-landing .navbar {
+        background: rgba(255, 255, 255, 0.92) !important;
+        border-bottom: 1px solid #ebedf0;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .page-landing .navbar-brand {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #101418 !important;
+        letter-spacing: -0.02em;
+    }
+
+    .page-landing .navbar .nav-link {
+        color: #364152 !important;
+        font-weight: 500;
+        padding: 8px 12px !important;
+        border-radius: 10px;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .page-landing .navbar .nav-link:hover {
+        color: #101418 !important;
+        background: #f3f4f6;
+    }
+
+    .page-landing .navbar .btn.btn-primary {
+        background: #101418 !important;
+        border-color: #101418 !important;
+        color: #ffffff !important;
+        border-radius: 10px;
+        padding: 10px 16px;
+        font-weight: 600;
+        box-shadow: 0 6px 14px rgba(16, 20, 24, 0.18);
+    }
+
+    .page-landing .navbar .btn.btn-primary:hover {
+        background: #1f252d !important;
+        border-color: #1f252d !important;
+        color: #ffffff !important;
+    }
+
+    .page-landing .navbar .btn.btn-primary:focus,
+    .page-landing .navbar .btn.btn-primary:active {
+        background: #101418 !important;
+        border-color: #101418 !important;
+        box-shadow: 0 0 0 3px rgba(16, 20, 24, 0.16) !important;
+    }
+
+    .page-landing {
+        --lp-black: #101418;
+        --lp-white: #ffffff;
+        --lp-gray-50: #f6f7f8;
+        --lp-gray-100: #ebedf0;
+        --lp-gray-500: #5f6975;
+        --lp-shadow-sm: 0 8px 18px rgba(17, 24, 39, 0.06);
+        --lp-shadow-md: 0 14px 28px rgba(17, 24, 39, 0.09);
+    }
+
+    .landing-page {
+        color: var(--lp-black);
+    }
+
+    .landing-page .lp-container {
+        max-width: 1120px;
+    }
+
+    .landing-page .lp-section {
+        padding: 104px 0;
+    }
+
+    .landing-page .lp-section + .lp-section {
+        border-top: 1px solid var(--lp-gray-100);
+    }
+
+    .landing-page .lp-heading {
+        max-width: 700px;
+        margin: 0 auto 52px;
+    }
+
+    .landing-page .lp-title {
+        font-size: clamp(2rem, 3.6vw, 2.55rem);
+        line-height: 1.2;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0 0 14px;
+    }
+
+    .landing-page .lp-subtitle {
+        margin: 0;
+        color: var(--lp-gray-500);
+        font-size: 1.04rem;
+        line-height: 1.65;
+    }
+
+    .landing-page .lp-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 190px;
+        padding: 14px 30px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-size: 1.05rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .landing-page .lp-btn-primary {
+        background: var(--lp-black);
+        color: var(--lp-white);
+        box-shadow: var(--lp-shadow-sm);
+    }
+
+    .landing-page .lp-btn-primary:hover {
+        color: var(--lp-white);
+        background: #1f252d;
+        transform: translateY(-1px);
+        box-shadow: var(--lp-shadow-md);
+    }
+
+    .landing-page .lp-hero {
+        padding-top: 122px;
+        padding-bottom: 134px;
+        background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+    }
+
+    .landing-page .lp-hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--lp-gray-100);
+        color: var(--lp-gray-500);
+        background: var(--lp-white);
+        font-size: 0.94rem;
+        font-weight: 500;
+        margin-bottom: 26px;
+    }
+
+    .landing-page .lp-hero-title {
+        font-size: clamp(2.45rem, 5.4vw, 4.2rem);
+        line-height: 1.1;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        margin: 0 0 20px;
+    }
+
+    .landing-page .lp-hero-subtitle {
+        max-width: 680px;
+        margin: 0 auto 44px;
+        color: var(--lp-gray-500);
+        font-size: 1.13rem;
+        line-height: 1.7;
+    }
+
+    .landing-page .lp-features {
+        background: var(--lp-gray-50);
+    }
+
+    .landing-page .lp-feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+    }
+
+    .landing-page .lp-feature-card {
+        min-height: 218px;
+        height: 100%;
+        padding: 30px 24px;
+        border-radius: 16px;
+        border: 1px solid var(--lp-gray-100);
+        background: var(--lp-white);
+        box-shadow: var(--lp-shadow-sm);
+        text-align: left;
+    }
+
+    .landing-page .lp-feature-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--lp-black);
+        color: var(--lp-white);
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+    }
+
+    .landing-page .lp-feature-title {
+        font-size: 1.16rem;
+        line-height: 1.35;
+        margin: 0 0 10px;
+        font-weight: 600;
+    }
+
+    .landing-page .lp-feature-text {
+        margin: 0;
+        color: var(--lp-gray-500);
+        font-size: 0.98rem;
+        line-height: 1.62;
+    }
+
+    .landing-page .lp-stats {
+        background: var(--lp-white);
+    }
+
+    .landing-page .lp-stats-row {
+        max-width: 900px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border: 1px solid var(--lp-gray-100);
+        border-radius: 14px;
+        background: var(--lp-gray-50);
+        overflow: hidden;
+    }
+
+    .landing-page .lp-stat-item {
+        text-align: center;
+        padding: 28px 10px;
+        border-right: 1px solid var(--lp-gray-100);
+    }
+
+    .landing-page .lp-stat-item:last-child {
+        border-right: 0;
+    }
+
+    .landing-page .lp-stat-number {
+        font-size: clamp(1.85rem, 3vw, 2.35rem);
+        line-height: 1.15;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+    }
+
+    .landing-page .lp-stat-label {
+        margin: 0;
+        color: var(--lp-gray-500);
+        font-size: 0.98rem;
+    }
+
+    .landing-page .lp-cta {
+        padding-top: 112px;
+        padding-bottom: 112px;
+        background: var(--lp-gray-50);
+    }
+
+    .landing-page .lp-cta .lp-title {
+        margin-bottom: 30px;
+    }
+
+    .page-landing .footer {
+        margin-top: 56px;
+        background: #0f141a !important;
+        color: #e5e7eb;
+        border-top: 1px solid #202733;
+        padding-top: 64px;
+        padding-bottom: 28px;
+    }
+
+    .page-landing .footer .row {
+        align-items: flex-start;
+        row-gap: 28px;
+    }
+
+    .page-landing .footer .col-lg-4 p {
+        max-width: 360px;
+        color: #c3c9d4;
+        line-height: 1.65;
+        margin-bottom: 18px;
+    }
+
+    .page-landing .footer h6,
+    .page-landing .footer .fw-bold {
+        color: #ffffff;
+        letter-spacing: -0.01em;
+    }
+
+    .page-landing .footer .list-unstyled li {
+        margin-bottom: 10px;
+    }
+
+    .page-landing .footer a {
+        color: #d1d6df;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .page-landing .footer a:hover {
+        color: #ffffff;
+    }
+
+    .page-landing .footer .d-flex.gap-3 a {
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #19202b;
+        border: 1px solid #273142;
+        color: #ffffff;
+    }
+
+    .page-landing .footer .d-flex.gap-3 a:hover {
+        background: #252f3d;
+        color: #ffffff;
+    }
+
+    .page-landing .footer .footer-bottom {
+        margin-top: 34px;
+        padding-top: 20px;
+        border-top: 1px solid #263041;
+    }
+
+    .page-landing .footer .footer-bottom p {
+        margin: 0;
+        color: #aeb6c4;
+    }
+
+    @media (max-width: 991px) {
+        .landing-page .lp-section {
+            padding: 84px 0;
+        }
+
+        .landing-page .lp-hero {
+            padding-top: 96px;
+            padding-bottom: 102px;
+        }
+
+        .landing-page .lp-feature-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .landing-page .lp-stats-row {
+            max-width: 100%;
+        }
+
+        .page-landing .footer {
+            margin-top: 44px;
+            padding-top: 52px;
+        }
+
+        .page-landing .footer .col-lg-4 p {
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .page-landing .navbar-brand {
+            font-size: 1.95rem;
+        }
+
+        .landing-page .lp-section {
+            padding: 64px 0;
+        }
+
+        .landing-page .lp-hero {
+            padding-top: 74px;
+            padding-bottom: 84px;
+        }
+
+        .landing-page .lp-hero-title {
+            font-size: clamp(2.05rem, 9vw, 2.85rem);
+        }
+
+        .landing-page .lp-hero-subtitle {
+            font-size: 1rem;
+            margin-bottom: 34px;
+        }
+
+        .landing-page .lp-feature-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .landing-page .lp-stats-row {
+            grid-template-columns: 1fr;
+        }
+
+        .landing-page .lp-stat-item {
+            border-right: 0;
+            border-bottom: 1px solid var(--lp-gray-100);
+        }
+
+        .landing-page .lp-stat-item:last-child {
+            border-bottom: 0;
+        }
+
+        .landing-page .lp-cta {
+            padding-top: 84px;
+            padding-bottom: 84px;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<section class="hero-landing">
-    <div class="row align-items-center g-4">
-        <div class="col-lg-6">
-            <span class="hero-badge">Curated essentials for modern shoppers</span>
-            <h1 class="hero-title mt-3">ShopSphere - Your Modern Commerce Hub</h1>
-            <p class="hero-subtitle">Discover products that feel handpicked, track orders effortlessly, and keep every purchase secure.</p>
-            <div class="d-flex flex-wrap gap-3 mt-4">
-                <a class="btn btn-brand btn-lg" href="{% url 'products:list' %}">Browse Products</a>
-                <a class="btn btn-outline-dark btn-lg" href="{% url 'orders:history' %}">Track Orders</a>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="hero-media">
-                <div class="hero-media-card">
-                    <div class="hero-media-header">
-                        <span class="hero-pill">Fast delivery</span>
-                        <span class="hero-pill">Secure checkout</span>
-                    </div>
-                    <div class="hero-media-body">
-                        <h2 class="h5 mb-2">Commerce, simplified</h2>
-                        <p class="text-muted mb-0">A curated marketplace with trusted sellers, smart recommendations, and quick fulfillment.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+<div class="landing-page">
+<section class="lp-section lp-hero">
+    <div class="container lp-container text-center">
+        <span class="lp-hero-badge">
+            <i class="bi bi-stars"></i>
+            Trusted by 10,000+ users
+        </span>
+        <h1 class="lp-hero-title">ShopSphere - Modern Shopping Experience</h1>
+        <p class="lp-hero-subtitle">Discover curated products, seamless checkout, and fast delivery with a modern shopping experience built for speed and trust.</p>
+        <a href="{% url 'products:list' %}" class="lp-btn lp-btn-primary">Start Shopping</a>
     </div>
 </section>
 
-<section class="features mt-5">
-    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-4">
-        <div>
-            <h2 class="h4 mb-1">Built for modern shopping</h2>
-            <p class="text-muted mb-0">Everything you need for fast, trusted checkout and delivery.</p>
+<section class="lp-section lp-features">
+    <div class="container lp-container">
+        <div class="lp-heading text-center">
+            <h2 class="lp-title">Everything You Need To Shop Better</h2>
+            <p class="lp-subtitle">A clean platform designed to make online shopping faster, safer, and easier.</p>
         </div>
-        <a class="btn btn-outline-dark" href="{% url 'products:list' %}">Explore products</a>
-    </div>
-    <div class="row g-3">
-        <div class="col-md-6 col-lg-3">
-            <div class="feature-card h-100">
-                <div class="feature-icon">
-                    <i class="bi bi-truck"></i>
+
+        <div class="lp-feature-grid">
+            <article class="lp-feature-card">
+                <div class="lp-feature-icon">
+                        <i class="bi bi-lightning-charge"></i>
                 </div>
-                <h3 class="h6">Fast Delivery</h3>
-                <p class="text-muted mb-0">Track shipments end-to-end with reliable delivery updates.</p>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="feature-card h-100">
-                <div class="feature-icon">
+                <h3 class="lp-feature-title">Fast Delivery</h3>
+                <p class="lp-feature-text">Get your orders delivered quickly with real-time tracking at every step.</p>
+            </article>
+            <article class="lp-feature-card">
+                <div class="lp-feature-icon">
                     <i class="bi bi-shield-check"></i>
                 </div>
-                <h3 class="h6">Secure Checkout</h3>
-                <p class="text-muted mb-0">Encrypted payments with saved addresses for faster buying.</p>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="feature-card h-100">
-                <div class="feature-icon">
-                    <i class="bi bi-shop-window"></i>
+                <h3 class="lp-feature-title">Secure Payments</h3>
+                <p class="lp-feature-text">Checkout safely with protected transactions and trusted payment options.</p>
+            </article>
+            <article class="lp-feature-card">
+                <div class="lp-feature-icon">
+                    <i class="bi bi-people"></i>
                 </div>
-                <h3 class="h6">Multi-Vendor</h3>
-                <p class="text-muted mb-0">Browse curated storefronts from trusted sellers in one place.</p>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="feature-card h-100">
-                <div class="feature-icon">
-                    <i class="bi bi-stars"></i>
+                <h3 class="lp-feature-title">Trusted Sellers</h3>
+                <p class="lp-feature-text">Shop from verified sellers with transparent ratings and quality assurance.</p>
+            </article>
+            <article class="lp-feature-card">
+                <div class="lp-feature-icon">
+                    <i class="bi bi-arrow-repeat"></i>
                 </div>
-                <h3 class="h6">Smart Picks</h3>
-                <p class="text-muted mb-0">Recommendations that match your style and shopping history.</p>
+                <h3 class="lp-feature-title">Easy Returns</h3>
+                <p class="lp-feature-text">Enjoy hassle-free returns with a simple process and quick support.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="lp-section lp-stats">
+    <div class="container lp-container">
+        <div class="lp-stats-row">
+            <div class="lp-stat-item">
+                <div class="lp-stat-number">1M+</div>
+                <p class="lp-stat-label">Customers</p>
+            </div>
+            <div class="lp-stat-item">
+                <div class="lp-stat-number">50K+</div>
+                <p class="lp-stat-label">Products</p>
+            </div>
+            <div class="lp-stat-item">
+                <div class="lp-stat-number">500+</div>
+                <p class="lp-stat-label">Sellers</p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="product-preview mt-5">
-    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-4">
-        <div>
-            <h2 class="h4 mb-1">Latest drops</h2>
-            <p class="text-muted mb-0">Fresh arrivals from our top sellers.</p>
-        </div>
-        <a class="btn btn-outline-dark" href="{% url 'products:list' %}">View all products</a>
-    </div>
-    <div class="row g-3">
-        {% for product in latest_products %}
-            <div class="col-sm-6 col-lg-3">
-                <div class="product-preview-card h-100">
-                    <div class="product-preview-media">
-                        {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                        {% else %}
-                            <div class="product-preview-placeholder">No image</div>
-                        {% endif %}
-                    </div>
-                    <div class="product-preview-body">
-                        <span class="badge-soft">{{ product.category.name }}</span>
-                        <h3 class="h6 mt-3 mb-1">{{ product.name }}</h3>
-                        <p class="fw-semibold mb-3">Rs. {{ product.price }}</p>
-                        <a class="btn btn-sm btn-brand" href="{{ product.get_absolute_url }}">View</a>
-                    </div>
-                </div>
-            </div>
-        {% empty %}
-            <div class="col-12">
-                <div class="alert alert-info">No products yet. Add your first product to get started.</div>
-            </div>
-        {% endfor %}
+<section class="lp-section lp-cta text-center">
+    <div class="container lp-container">
+        <h2 class="lp-title">Ready to start shopping?</h2>
+        <a href="{% url 'products:list' %}" class="lp-btn lp-btn-primary">Browse Products</a>
     </div>
 </section>
+</div>
+
 {% endblock %}

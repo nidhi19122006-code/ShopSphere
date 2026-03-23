@@ -2,40 +2,204 @@
 
 {% block title %}{{ product.name }} - ShopSphere{% endblock %}
 
+{% block body_class %}page-product-detail{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-product-detail .product-detail-page {
+        padding: 34px 0 56px;
+    }
+
+    .page-product-detail .product-media-card,
+    .page-product-detail .product-info-card {
+        border: 1px solid #e7eaee;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+        overflow: hidden;
+    }
+
+    .page-product-detail .product-media-card {
+        padding: 18px;
+    }
+
+    .page-product-detail .product-media-frame {
+        height: 430px;
+        border-radius: 12px;
+        background: #f8f9fa;
+        border: 1px solid #edf0f3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .page-product-detail .product-media-frame img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+
+    .page-product-detail .product-info-card {
+        padding: 26px 24px;
+    }
+
+    .page-product-detail .product-category-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid #d9e0e8;
+        color: #475467;
+        font-size: 0.82rem;
+        font-weight: 600;
+        background: #f8fafc;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .page-product-detail .product-title {
+        margin: 12px 0 8px;
+        font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .page-product-detail .product-price {
+        margin-bottom: 14px;
+        font-size: 2rem;
+        line-height: 1.15;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .page-product-detail .product-description {
+        color: #4b5563;
+        line-height: 1.7;
+        margin-bottom: 14px;
+    }
+
+    .page-product-detail .product-meta {
+        margin-bottom: 18px;
+        color: #6b7280;
+        font-size: 0.95rem;
+    }
+
+    .page-product-detail .buy-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+    }
+
+    .page-product-detail .qty-input {
+        width: 96px;
+        border-radius: 10px;
+        border: 1px solid #cbd5e1;
+        padding: 10px 12px;
+        text-align: center;
+    }
+
+    .page-product-detail .qty-input:focus {
+        border-color: #111827;
+        box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
+    }
+
+    .page-product-detail .btn-add-cart {
+        background: #111827;
+        border: 1px solid #111827;
+        color: #ffffff;
+        border-radius: 10px;
+        padding: 10px 18px;
+        font-weight: 600;
+    }
+
+    .page-product-detail .btn-add-cart:hover {
+        background: #1f2937;
+        border-color: #1f2937;
+        color: #ffffff;
+    }
+
+    .page-product-detail .btn-back {
+        border-radius: 10px;
+        padding: 10px 16px;
+        font-weight: 500;
+    }
+
+    @media (max-width: 991px) {
+        .page-product-detail .product-media-frame {
+            height: 330px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .page-product-detail .product-detail-page {
+            padding-top: 22px;
+            padding-bottom: 42px;
+        }
+
+        .page-product-detail .product-media-frame {
+            height: 260px;
+        }
+
+        .page-product-detail .product-info-card {
+            padding: 20px 18px;
+        }
+
+        .page-product-detail .product-price {
+            font-size: 1.7rem;
+        }
+
+        .page-product-detail .buy-row {
+            align-items: stretch;
+        }
+
+        .page-product-detail .qty-input,
+        .page-product-detail .btn-add-cart {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row g-4">
+<div class="row g-4 product-detail-page">
     <div class="col-md-5">
-        <div class="section-card">
+        <div class="product-media-card">
             {% if product.image %}
-                <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+                <div class="product-media-frame">
+                    <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+                </div>
             {% else %}
-                <div class="border rounded bg-light d-flex align-items-center justify-content-center" style="height: 280px;">
+                <div class="product-media-frame">
                     <span class="text-muted">No image</span>
                 </div>
             {% endif %}
         </div>
     </div>
     <div class="col-md-7">
-        <div class="section-card">
-            <span class="badge-soft">{{ product.category.name }}</span>
-            <h1 class="h3 mt-3">{{ product.name }}</h1>
-            <p class="fs-4 fw-semibold">Rs. {{ product.price }}</p>
-            <p class="text-muted">{{ product.description|default:"No description yet." }}</p>
-            <p class="text-muted small">SKU: {{ product.sku }}</p>
+        <div class="product-info-card">
+            <span class="product-category-badge">{{ product.category.name }}</span>
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-price">Rs. {{ product.price }}</p>
+            <p class="product-description">{{ product.description|default:"No description yet." }}</p>
+            <p class="product-meta mb-0">SKU: {{ product.sku }}</p>
             {% if product.stock > 0 %}
-                <form action="{% url 'cart:add' product.id %}" method="post" class="mt-3">
+                <form action="{% url 'cart:add' product.id %}" method="post" class="mt-3 mb-2">
                     {% csrf_token %}
-                    <div class="d-flex flex-wrap gap-2 align-items-center">
-                        <input type="number" name="quantity" min="1" max="20" value="1" class="form-control" style="max-width: 120px;">
+                    <div class="buy-row">
+                        <input type="number" name="quantity" min="1" max="20" value="1" class="form-control qty-input">
                         <input type="hidden" name="override" value="False">
-                        <button class="btn btn-brand" type="submit">Add to cart</button>
+                        <button class="btn btn-add-cart" type="submit">Add to cart</button>
                     </div>
                 </form>
             {% else %}
                 <div class="alert alert-warning mt-3">Out of stock</div>
             {% endif %}
-            <div class="mt-4">
-                <a href="{% url 'products:list' %}" class="btn btn-outline-dark">Back to products</a>
+            <div class="mt-3">
+                <a href="{% url 'products:list' %}" class="btn btn-outline-dark btn-back">Back to products</a>
             </div>
         </div>
     </div>

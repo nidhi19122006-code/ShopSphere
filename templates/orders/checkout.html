@@ -2,34 +2,344 @@
 
 {% block title %}Checkout - ShopSphere{% endblock %}
 
+{% block body_class %}page-checkout{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-checkout {
+        background:
+            radial-gradient(circle at 100% 0%, rgba(15, 23, 42, 0.07), transparent 42%),
+            radial-gradient(circle at 0% 20%, rgba(30, 64, 175, 0.08), transparent 32%),
+            #f8fafc;
+    }
+
+    .checkout-shell {
+        max-width: 1160px;
+        margin: 34px auto 58px;
+        padding: 0 16px;
+    }
+
+    .checkout-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .checkout-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+        height: 100%;
+    }
+
+    .checkout-card .card-body {
+        padding: 24px;
+    }
+
+    .checkout-title {
+        margin: 0 0 2px;
+        font-size: 1.45rem;
+        font-weight: 760;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+    }
+
+    .checkout-subtitle {
+        margin: 0 0 18px;
+        color: #64748b;
+        font-size: 0.95rem;
+    }
+
+    .checkout-form .field {
+        margin-bottom: 14px;
+    }
+
+    .checkout-form .field-grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .checkout-form label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.88rem;
+        color: #334155;
+        font-weight: 600;
+    }
+
+    .checkout-form input[type="text"],
+    .checkout-form input[type="number"],
+    .checkout-form input[type="email"],
+    .checkout-form textarea,
+    .checkout-form select {
+        width: 100%;
+        min-height: 44px;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 0.95rem;
+        color: #0f172a;
+        background: #fff;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .checkout-form textarea {
+        min-height: 90px;
+        resize: vertical;
+    }
+
+    .checkout-form input:focus,
+    .checkout-form textarea:focus,
+    .checkout-form select:focus {
+        outline: none;
+        border-color: #111827;
+        box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.08);
+    }
+
+    .checkout-form .is-invalid {
+        border-color: #dc2626 !important;
+    }
+
+    .checkout-form .error {
+        margin-top: 6px;
+        color: #dc2626;
+        font-size: 0.82rem;
+        font-weight: 500;
+    }
+
+    .check-field {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 8px 0 20px;
+    }
+
+    .check-field input[type="checkbox"] {
+        width: 17px;
+        height: 17px;
+        accent-color: #111827;
+    }
+
+    .check-field label {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #334155;
+        font-weight: 500;
+    }
+
+    .checkout-submit {
+        min-width: 170px;
+        min-height: 45px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .summary-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .summary-list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 0;
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .summary-list li:last-child {
+        border-bottom: 0;
+    }
+
+    .summary-list .item-name {
+        color: #0f172a;
+        font-weight: 500;
+    }
+
+    .summary-list .item-price {
+        color: #0f172a;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .summary-total {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px dashed #dbe3ee;
+        display: flex;
+        justify-content: space-between;
+        color: #0f172a;
+        font-weight: 750;
+        font-size: 1.06rem;
+    }
+
+    .summary-note {
+        margin: 10px 0 0;
+        color: #64748b;
+        font-size: 0.84rem;
+    }
+
+    .non-field-errors {
+        margin-bottom: 14px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #fecaca;
+        background: #fef2f2;
+        color: #b91c1c;
+        font-size: 0.88rem;
+    }
+
+    @media (max-width: 900px) {
+        .checkout-layout {
+            grid-template-columns: minmax(0, 1fr) 280px;
+            gap: 16px;
+        }
+    }
+
+    @media (max-width: 720px) {
+        .checkout-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .checkout-shell {
+            margin-top: 26px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .checkout-shell {
+            padding: 0 12px;
+            margin-bottom: 44px;
+        }
+
+        .checkout-card .card-body {
+            padding: 18px;
+        }
+
+        .checkout-form .field-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .checkout-submit {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row g-4">
-    <div class="col-lg-7">
-        <div class="section-card">
-            <h1 class="h4 mb-3">Shipping address</h1>
-            <form method="post" novalidate>
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-brand">Place order</button>
-            </form>
-        </div>
-    </div>
-    <div class="col-lg-5">
-        <div class="section-card">
-            <h2 class="h5 mb-3">Order summary</h2>
-            <ul class="list-unstyled mb-3">
-                {% for item in cart %}
-                    <li class="d-flex justify-content-between">
-                        <span>{{ item.product.name }} x {{ item.quantity }}</span>
-                        <span>Rs. {{ item.total_price }}</span>
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="d-flex justify-content-between fw-semibold">
-                <span>Total</span>
-                <span>Rs. {{ cart.get_total_price }}</span>
+<div class="checkout-shell">
+    <div class="checkout-layout">
+        <div>
+            <div class="checkout-card card">
+                <div class="card-body">
+                    <h1 class="checkout-title">Shipping address</h1>
+                    <p class="checkout-subtitle">Add your delivery details to complete this order.</p>
+
+                    <form method="post" novalidate class="checkout-form">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="non-field-errors">
+                                {% for error in form.non_field_errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="field-grid">
+                            <div class="field">
+                                <label for="{{ form.label.id_for_label }}">Label</label>
+                                <input type="text" name="{{ form.label.html_name }}" id="{{ form.label.id_for_label }}" value="{{ form.label.value|default:'' }}" class="{% if form.label.errors %}is-invalid{% endif %}">
+                                {% for error in form.label.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="field">
+                                <label for="{{ form.full_name.id_for_label }}">Full name</label>
+                                <input type="text" name="{{ form.full_name.html_name }}" id="{{ form.full_name.id_for_label }}" value="{{ form.full_name.value|default:'' }}" class="{% if form.full_name.errors %}is-invalid{% endif %}">
+                                {% for error in form.full_name.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="{{ form.phone_number.id_for_label }}">Phone number</label>
+                            <input type="text" name="{{ form.phone_number.html_name }}" id="{{ form.phone_number.id_for_label }}" value="{{ form.phone_number.value|default:'' }}" class="{% if form.phone_number.errors %}is-invalid{% endif %}">
+                            {% for error in form.phone_number.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                        </div>
+
+                        <div class="field">
+                            <label for="{{ form.line1.id_for_label }}">Address line 1</label>
+                            <input type="text" name="{{ form.line1.html_name }}" id="{{ form.line1.id_for_label }}" value="{{ form.line1.value|default:'' }}" class="{% if form.line1.errors %}is-invalid{% endif %}">
+                            {% for error in form.line1.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                        </div>
+
+                        <div class="field">
+                            <label for="{{ form.line2.id_for_label }}">Address line 2</label>
+                            <input type="text" name="{{ form.line2.html_name }}" id="{{ form.line2.id_for_label }}" value="{{ form.line2.value|default:'' }}" class="{% if form.line2.errors %}is-invalid{% endif %}">
+                            {% for error in form.line2.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                        </div>
+
+                        <div class="field-grid">
+                            <div class="field">
+                                <label for="{{ form.city.id_for_label }}">City</label>
+                                <input type="text" name="{{ form.city.html_name }}" id="{{ form.city.id_for_label }}" value="{{ form.city.value|default:'' }}" class="{% if form.city.errors %}is-invalid{% endif %}">
+                                {% for error in form.city.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="field">
+                                <label for="{{ form.state.id_for_label }}">State</label>
+                                <input type="text" name="{{ form.state.html_name }}" id="{{ form.state.id_for_label }}" value="{{ form.state.value|default:'' }}" class="{% if form.state.errors %}is-invalid{% endif %}">
+                                {% for error in form.state.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="field-grid">
+                            <div class="field">
+                                <label for="{{ form.postal_code.id_for_label }}">Postal code</label>
+                                <input type="text" name="{{ form.postal_code.html_name }}" id="{{ form.postal_code.id_for_label }}" value="{{ form.postal_code.value|default:'' }}" class="{% if form.postal_code.errors %}is-invalid{% endif %}">
+                                {% for error in form.postal_code.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="field">
+                                <label for="{{ form.country.id_for_label }}">Country</label>
+                                <input type="text" name="{{ form.country.html_name }}" id="{{ form.country.id_for_label }}" value="{{ form.country.value|default:'' }}" class="{% if form.country.errors %}is-invalid{% endif %}">
+                                {% for error in form.country.errors %}<div class="error">{{ error }}</div>{% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="check-field">
+                            <input type="checkbox" name="{{ form.is_default.html_name }}" id="{{ form.is_default.id_for_label }}" {% if form.is_default.value %}checked{% endif %}>
+                            <label for="{{ form.is_default.id_for_label }}">Set as my default address</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark checkout-submit">Place order</button>
+                    </form>
+                </div>
             </div>
-            <p class="text-muted small mt-2">Payment is set to dummy for now.</p>
+        </div>
+
+        <div>
+            <div class="checkout-card card">
+                <div class="card-body">
+                    <h2 class="checkout-title" style="font-size: 1.22rem;">Order summary</h2>
+                    <ul class="summary-list">
+                        {% for item in cart %}
+                            <li>
+                                <span class="item-name">{{ item.product.name }} x {{ item.quantity }}</span>
+                                <span class="item-price">Rs. {{ item.total_price }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span>Rs. {{ cart.get_total_price }}</span>
+                    </div>
+                    <p class="summary-note">Payment is set to dummy for now.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -2,16 +2,229 @@
 
 {% block title %}Sign up - ShopSphere{% endblock %}
 
+{% block body_class %}page-signup{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-signup {
+        --auth-black: #101418;
+        --auth-white: #ffffff;
+        --auth-gray-50: #f6f7f8;
+        --auth-gray-100: #e8ebef;
+        --auth-gray-300: #d3d9e1;
+        --auth-gray-500: #5f6975;
+        --auth-shadow: 0 18px 40px rgba(17, 24, 39, 0.08);
+    }
+
+    .page-signup .navbar,
+    .page-signup .footer {
+        display: none !important;
+    }
+
+    .page-signup main {
+        min-height: 100vh;
+    }
+
+    .page-signup .auth-wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 56px 0;
+        background: linear-gradient(to bottom, #ffffff 0%, var(--auth-gray-50) 100%);
+    }
+
+    .page-signup .auth-container {
+        max-width: 1120px;
+    }
+
+    .page-signup .auth-card {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 34px 30px;
+        background: var(--auth-white);
+        border: 1px solid var(--auth-gray-100);
+        border-radius: 18px;
+        box-shadow: var(--auth-shadow);
+    }
+
+    .page-signup .auth-title {
+        margin: 0 0 10px;
+        font-size: 2rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--auth-black);
+        text-align: center;
+    }
+
+    .page-signup .auth-subtitle {
+        margin: 0 0 24px;
+        color: var(--auth-gray-500);
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .page-signup .auth-form p {
+        margin-bottom: 14px;
+    }
+
+    .page-signup .auth-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--auth-black);
+        font-size: 0.95rem;
+    }
+
+    .page-signup .auth-form input,
+    .page-signup .auth-form textarea,
+    .page-signup .auth-form select {
+        width: 100%;
+        border: 1px solid var(--auth-gray-300);
+        border-radius: 10px;
+        padding: 11px 13px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        background: #ffffff;
+    }
+
+    .page-signup .auth-form textarea {
+        min-height: 96px;
+        resize: vertical;
+    }
+
+    .page-signup .auth-form input:focus,
+    .page-signup .auth-form textarea:focus,
+    .page-signup .auth-form select:focus {
+        border-color: var(--auth-black);
+        box-shadow: 0 0 0 3px rgba(16, 20, 24, 0.1);
+    }
+
+    .page-signup .auth-form input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        border-radius: 4px;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
+    .page-signup .auth-form ul {
+        margin: 8px 0 0;
+        padding-left: 18px;
+        color: var(--auth-gray-500);
+        font-size: 0.9rem;
+    }
+
+    .page-signup .auth-form ul.errorlist {
+        list-style: none;
+        margin: 8px 0 0;
+        padding: 0;
+        color: #b42318;
+        font-size: 0.86rem;
+    }
+
+    .page-signup .seller-field-hidden {
+        display: none;
+    }
+
+    .page-signup .auth-btn {
+        width: 100%;
+        margin-top: 10px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--auth-black);
+        color: var(--auth-white);
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 12px 18px;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .page-signup .auth-btn:hover {
+        background: #1f252d;
+        transform: translateY(-1px);
+    }
+
+    .page-signup .auth-link {
+        margin-top: 16px;
+        text-align: center;
+        color: var(--auth-gray-500);
+    }
+
+    .page-signup .auth-link a {
+        color: #1f2937;
+        text-decoration: none;
+        border-bottom: 1px solid #c5ccd7;
+    }
+
+    .page-signup .auth-link a:hover {
+        color: #000000;
+        border-bottom-color: #000000;
+    }
+
+    @media (max-width: 768px) {
+        .page-signup .auth-wrap {
+            padding: 44px 0;
+        }
+
+        .page-signup .auth-card {
+            max-width: 100%;
+            padding: 28px 22px;
+            border-radius: 14px;
+        }
+
+        .page-signup .auth-title {
+            font-size: 1.72rem;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h1 class="h4 mb-3">Create your account</h1>
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-brand">Sign up</button>
-        </form>
-        <p class="mt-3 mb-0">Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+<section class="auth-wrap">
+        <div class="container auth-container">
+                <div class="auth-card">
+                        <h1 class="auth-title">Create your account</h1>
+                        <p class="auth-subtitle">Join ShopSphere and start shopping or selling in minutes.</p>
+                        <form method="post" novalidate class="auth-form">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="auth-btn">Sign up</button>
+                        </form>
+                        <p class="auth-link">Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+                </div>
     </div>
-</div>
+</section>
+
+<script>
+    (function () {
+        const checkbox = document.getElementById("id_register_as_seller");
+        const sellerFieldIds = ["id_shop_name", "id_shop_description", "id_contact_email"];
+
+        if (!checkbox) {
+            return;
+        }
+
+        const sellerRows = sellerFieldIds
+            .map((id) => document.getElementById(id))
+            .filter(Boolean)
+            .map((el) => el.closest("p"))
+            .filter(Boolean);
+
+        const hasSellerErrors = sellerRows.some((row) => row.querySelector(".errorlist"));
+
+        const applyVisibility = () => {
+            const shouldShow = checkbox.checked || hasSellerErrors;
+            sellerRows.forEach((row) => {
+                row.classList.toggle("seller-field-hidden", !shouldShow);
+            });
+        };
+
+        checkbox.addEventListener("change", applyVisibility);
+        applyVisibility();
+    })();
+</script>
 {% endblock %}

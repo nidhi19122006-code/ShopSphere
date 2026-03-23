@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    SellerOrderApproveView,
     SellerDashboardView,
     SellerOrdersView,
     SellerProductCreateView,
@@ -18,4 +19,5 @@ urlpatterns = [
     path("products/<int:pk>/edit/", SellerProductUpdateView.as_view(), name="product_edit"),
     path("products/<int:pk>/delete/", SellerProductDeleteView.as_view(), name="product_delete"),
     path("orders/", SellerOrdersView.as_view(), name="orders"),
+    path("orders/<int:order_id>/approve/", SellerOrderApproveView.as_view(), name="order_approve"),
 ]
