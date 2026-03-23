@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - ShopSphere{% endblock %}
+
+{% block content %}
+<section class="hero-landing">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+            <span class="hero-badge">Curated essentials for modern shoppers</span>
+            <h1 class="hero-title mt-3">ShopSphere - Your Modern Commerce Hub</h1>
+            <p class="hero-subtitle">Discover products that feel handpicked, track orders effortlessly, and keep every purchase secure.</p>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                <a class="btn btn-brand btn-lg" href="{% url 'products:list' %}">Browse Products</a>
+                <a class="btn btn-outline-dark btn-lg" href="{% url 'orders:history' %}">Track Orders</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="hero-media">
+                <div class="hero-media-card">
+                    <div class="hero-media-header">
+                        <span class="hero-pill">Fast delivery</span>
+                        <span class="hero-pill">Secure checkout</span>
+                    </div>
+                    <div class="hero-media-body">
+                        <h2 class="h5 mb-2">Commerce, simplified</h2>
+                        <p class="text-muted mb-0">A curated marketplace with trusted sellers, smart recommendations, and quick fulfillment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features mt-5">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-4">
+        <div>
+            <h2 class="h4 mb-1">Built for modern shopping</h2>
+            <p class="text-muted mb-0">Everything you need for fast, trusted checkout and delivery.</p>
+        </div>
+        <a class="btn btn-outline-dark" href="{% url 'products:list' %}">Explore products</a>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card h-100">
+                <div class="feature-icon">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <h3 class="h6">Fast Delivery</h3>
+                <p class="text-muted mb-0">Track shipments end-to-end with reliable delivery updates.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card h-100">
+                <div class="feature-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h3 class="h6">Secure Checkout</h3>
+                <p class="text-muted mb-0">Encrypted payments with saved addresses for faster buying.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card h-100">
+                <div class="feature-icon">
+                    <i class="bi bi-shop-window"></i>
+                </div>
+                <h3 class="h6">Multi-Vendor</h3>
+                <p class="text-muted mb-0">Browse curated storefronts from trusted sellers in one place.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card h-100">
+                <div class="feature-icon">
+                    <i class="bi bi-stars"></i>
+                </div>
+                <h3 class="h6">Smart Picks</h3>
+                <p class="text-muted mb-0">Recommendations that match your style and shopping history.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="product-preview mt-5">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-4">
+        <div>
+            <h2 class="h4 mb-1">Latest drops</h2>
+            <p class="text-muted mb-0">Fresh arrivals from our top sellers.</p>
+        </div>
+        <a class="btn btn-outline-dark" href="{% url 'products:list' %}">View all products</a>
+    </div>
+    <div class="row g-3">
+        {% for product in latest_products %}
+            <div class="col-sm-6 col-lg-3">
+                <div class="product-preview-card h-100">
+                    <div class="product-preview-media">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                            <div class="product-preview-placeholder">No image</div>
+                        {% endif %}
+                    </div>
+                    <div class="product-preview-body">
+                        <span class="badge-soft">{{ product.category.name }}</span>
+                        <h3 class="h6 mt-3 mb-1">{{ product.name }}</h3>
+                        <p class="fw-semibold mb-3">Rs. {{ product.price }}</p>
+                        <a class="btn btn-sm btn-brand" href="{{ product.get_absolute_url }}">View</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">No products yet. Add your first product to get started.</div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

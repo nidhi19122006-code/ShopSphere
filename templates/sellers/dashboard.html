@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Seller dashboard - ShopSphere{% endblock %}
+
+{% block content %}
+<div class="section-card">
+    <h1 class="h4 mb-4">Seller dashboard</h1>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h6">Products</h2>
+                    <p class="display-6 mb-0">{{ product_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h6">Orders</h2>
+                    <p class="display-6 mb-0">{{ order_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h6">Quick actions</h2>
+                    <a class="btn btn-brand mt-2" href="{% url 'sellers:product_add' %}">Add product</a>
+                    <a class="btn btn-outline-dark mt-2" href="{% url 'sellers:orders' %}">View orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h2 class="h5">Top products</h2>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Orders</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in top_products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category.name }}</td>
+                            <td>{{ product.order_item_count }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-muted">No sales yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

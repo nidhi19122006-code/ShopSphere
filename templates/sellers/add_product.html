@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Manage product - ShopSphere{% endblock %}
+
+{% block content %}
+<div class="section-card">
+    <h1 class="h4 mb-3">Product details</h1>
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-brand">Save product</button>
+        <a class="btn btn-outline-dark" href="{% url 'sellers:products' %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}

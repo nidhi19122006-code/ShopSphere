@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Order placed - ShopSphere{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="h4 mb-2">Thank you for your order</h1>
+    {% if order %}
+        <p class="text-muted">Your order number is <strong>#{{ order.id }}</strong>.</p>
+        <a href="{% url 'orders:detail' order.id %}" class="btn btn-primary">View order</a>
+    {% else %}
+        <p class="text-muted">Your order has been placed successfully.</p>
+        <a href="{% url 'orders:history' %}" class="btn btn-primary">View orders</a>
+    {% endif %}
+</div>
+{% endblock %}

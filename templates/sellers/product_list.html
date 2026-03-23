@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Your products - ShopSphere{% endblock %}
+
+{% block content %}
+<div class="section-card">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+        <h1 class="h4 mb-0">Your products</h1>
+        <a class="btn btn-brand" href="{% url 'sellers:product_add' %}">Add product</a>
+    </div>
+
+    {% if products %}
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category.name }}</td>
+                            <td>Rs. {{ product.price }}</td>
+                            <td>{{ product.stock }}</td>
+                            <td>{% if product.is_active %}Active{% else %}Hidden{% endif %}</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-dark" href="{% url 'sellers:product_edit' product.id %}">Edit</a>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'sellers:product_delete' product.id %}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">No products yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

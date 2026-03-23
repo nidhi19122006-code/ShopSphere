@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Seller orders - ShopSphere{% endblock %}
+
+{% block content %}
+<div class="section-card">
+    <h1 class="h4 mb-4">Orders for your products</h1>
+
+    {% if order_items %}
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_items %}
+                        <tr>
+                            <td>#{{ item.order.id }}</td>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>Rs. {{ item.get_total_price }}</td>
+                            <td>{{ item.order.get_status_display }}</td>
+                            <td>{{ item.order.created_at|date:"M d, Y" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">No orders yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

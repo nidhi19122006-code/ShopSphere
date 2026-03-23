@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Order #{{ order.id }} - ShopSphere{% endblock %}
+
+{% block content %}
+<h1 class="h4 mb-3">Order #{{ order.id }}</h1>
+<p class="text-muted">Status: {{ order.get_status_display }} | Payment: {{ order.get_payment_status_display }}</p>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h2 class="h6">Items</h2>
+                <ul class="list-unstyled mb-0">
+                    {% for item in order.items.all %}
+                        <li class="d-flex justify-content-between">
+                            <span>{{ item.product.name }} x {{ item.quantity }}</span>
+                            <span>Rs. {{ item.get_total_price }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="h6">Shipping</h2>
+                <p class="mb-1">{{ order.address.full_name }}</p>
+                <p class="mb-1">{{ order.address.line1 }}</p>
+                {% if order.address.line2 %}<p class="mb-1">{{ order.address.line2 }}</p>{% endif %}
+                <p class="mb-1">{{ order.address.city }}, {{ order.address.state }} {{ order.address.postal_code }}</p>
+                <p class="mb-1">{{ order.address.country }}</p>
+                <p class="mb-0">{{ order.address.phone_number }}</p>
+                <hr>
+                <p class="fw-semibold mb-0">Total: Rs. {{ order.total_amount }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
