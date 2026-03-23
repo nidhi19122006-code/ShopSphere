@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Order history - ShopSphere{% endblock %}
+
+{% block content %}
+<h1 class="h4 mb-4">Order history</h1>
+
+{% if orders %}
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>#{{ order.id }}</td>
+                        <td>{{ order.get_status_display }}</td>
+                        <td>${{ order.total_amount }}</td>
+                        <td>{{ order.created_at|date:"M d, Y" }}</td>
+                        <td><a class="btn btn-sm btn-outline-primary" href="{% url 'orders:detail' order.id %}">View</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">No orders yet.</div>
+{% endif %}
+{% endblock %}

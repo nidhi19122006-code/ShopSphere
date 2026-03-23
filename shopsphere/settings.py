@@ -66,6 +66,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.cart.context_processors.cart",
             ],
         },
     },
@@ -135,3 +136,6 @@ LOGOUT_REDIRECT_URL = "accounts:login"
 
 # Email backend (console for development)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Cart
+CART_SESSION_ID = "cart"

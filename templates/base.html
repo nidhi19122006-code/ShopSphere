@@ -13,7 +13,9 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'products:list' %}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'cart:detail' %}">Cart ({{ cart|length }})</a></li>
                 {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'orders:history' %}">Orders</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'accounts:profile' %}">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
                 {% else %}

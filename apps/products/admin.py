@@ -1,9 +1,11 @@
 from django.contrib import admin
 
+from shopsphere.admin import admin_site
+
 from .models import Category, Product
 
 
-@admin.register(Category)
+@admin.register(Category, site=admin_site)
 class CategoryAdmin(admin.ModelAdmin):
 	list_display = ("name", "slug", "is_active")
 	list_filter = ("is_active",)
@@ -11,7 +13,7 @@ class CategoryAdmin(admin.ModelAdmin):
 	prepopulated_fields = {"slug": ("name",)}
 
 
-@admin.register(Product)
+@admin.register(Product, site=admin_site)
 class ProductAdmin(admin.ModelAdmin):
 	list_display = ("name", "sku", "category", "price", "stock", "is_active")
 	list_filter = ("is_active", "category")

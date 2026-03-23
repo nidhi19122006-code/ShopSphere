@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Your addresses - ShopSphere{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4">Saved addresses</h1>
+    <a class="btn btn-primary" href="{% url 'orders:address_add' %}">Add address</a>
+</div>
+
+{% if addresses %}
+    <div class="row g-3">
+        {% for address in addresses %}
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="h6">{{ address.label|default:"Address" }}</h2>
+                        <p class="mb-1">{{ address.full_name }}</p>
+                        <p class="mb-1">{{ address.line1 }}</p>
+                        {% if address.line2 %}<p class="mb-1">{{ address.line2 }}</p>{% endif %}
+                        <p class="mb-1">{{ address.city }}, {{ address.state }} {{ address.postal_code }}</p>
+                        <p class="mb-1">{{ address.country }}</p>
+                        <p class="mb-0">{{ address.phone_number }}</p>
+                        {% if address.is_default %}
+                            <span class="badge bg-success mt-2">Default</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">No saved addresses yet.</div>
+{% endif %}
+{% endblock %}

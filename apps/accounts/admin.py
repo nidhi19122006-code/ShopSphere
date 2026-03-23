@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
+from shopsphere.admin import admin_site
+
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import User
 
 
-@admin.register(User)
+@admin.register(User, site=admin_site)
 class UserAdmin(DjangoUserAdmin):
 	add_form = CustomUserCreationForm
 	form = CustomUserChangeForm

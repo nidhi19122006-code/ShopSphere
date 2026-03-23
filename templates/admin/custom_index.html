@@ -1,0 +1,66 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+    <div class="dashboard-module">
+        <h2>ShopSphere overview</h2>
+        <div class="dashboard-stats">
+            <div class="dashboard-stat">
+                <span class="stat-label">Total users</span>
+                <span class="stat-value">{{ dashboard_stats.total_users }}</span>
+            </div>
+            <div class="dashboard-stat">
+                <span class="stat-label">Total products</span>
+                <span class="stat-value">{{ dashboard_stats.total_products }}</span>
+            </div>
+            <div class="dashboard-stat">
+                <span class="stat-label">Total orders</span>
+                <span class="stat-value">{{ dashboard_stats.total_orders }}</span>
+            </div>
+            <div class="dashboard-stat">
+                <span class="stat-label">Pending orders</span>
+                <span class="stat-value">{{ dashboard_stats.pending_orders }}</span>
+            </div>
+            <div class="dashboard-stat">
+                <span class="stat-label">Total sales</span>
+                <span class="stat-value">{{ dashboard_stats.total_sales }}</span>
+            </div>
+        </div>
+    </div>
+
+    {{ block.super }}
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        .dashboard-module {
+            background: #fff;
+            border: 1px solid #e1e1e1;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            padding: 16px 20px;
+        }
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        .dashboard-stat {
+            background: #f8f9fb;
+            border-radius: 6px;
+            padding: 12px;
+        }
+        .stat-label {
+            color: #6c757d;
+            display: block;
+            font-size: 12px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+    </style>
+{% endblock %}
