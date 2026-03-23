@@ -3,59 +3,61 @@
 {% block title %}Your cart - ShopSphere{% endblock %}
 
 {% block content %}
-<h1 class="h4 mb-4">Your cart</h1>
+<div class="section-card">
+    <h1 class="h4 mb-4">Your cart</h1>
 
-{% if cart|length == 0 %}
-    <div class="alert alert-info">Your cart is empty.</div>
-    <a href="{% url 'products:list' %}" class="btn btn-primary">Continue shopping</a>
-{% else %}
-    <div class="table-responsive">
-        <table class="table align-middle">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart %}
+    {% if cart|length == 0 %}
+        <div class="alert alert-info">Your cart is empty.</div>
+        <a href="{% url 'products:list' %}" class="btn btn-brand">Continue shopping</a>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
                     <tr>
-                        <td>
-                            <strong>{{ item.product.name }}</strong>
-                            <div class="text-muted small">SKU: {{ item.product.sku }}</div>
-                        </td>
-                        <td>${{ item.price }}</td>
-                        <td>
-                            <form action="{% url 'cart:add' item.product.id %}" method="post" class="d-flex gap-2">
-                                {% csrf_token %}
-                                {{ item.update_form.quantity }}
-                                {{ item.update_form.override }}
-                                <button class="btn btn-sm btn-outline-primary" type="submit">Update</button>
-                            </form>
-                        </td>
-                        <td>${{ item.total_price }}</td>
-                        <td>
-                            <a class="btn btn-sm btn-outline-danger" href="{% url 'cart:remove' item.product.id %}">Remove</a>
-                        </td>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
-        <h2 class="h5 mb-0">Total: ${{ cart.get_total_price }}</h2>
-        <div class="d-flex gap-2">
-            <a href="{% url 'products:list' %}" class="btn btn-outline-secondary">Continue shopping</a>
-            {% if user.is_authenticated %}
-                <a href="{% url 'orders:checkout' %}" class="btn btn-primary">Checkout</a>
-            {% else %}
-                <a href="{% url 'accounts:login' %}" class="btn btn-primary">Login to checkout</a>
-            {% endif %}
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                        <tr>
+                            <td>
+                                <strong>{{ item.product.name }}</strong>
+                                <div class="text-muted small">SKU: {{ item.product.sku }}</div>
+                            </td>
+                            <td>${{ item.price }}</td>
+                            <td>
+                                <form action="{% url 'cart:add' item.product.id %}" method="post" class="d-flex gap-2">
+                                    {% csrf_token %}
+                                    {{ item.update_form.quantity }}
+                                    {{ item.update_form.override }}
+                                    <button class="btn btn-sm btn-outline-dark" type="submit">Update</button>
+                                </form>
+                            </td>
+                            <td>${{ item.total_price }}</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'cart:remove' item.product.id %}">Remove</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </div>
-{% endif %}
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+            <h2 class="h5 mb-0">Total: ${{ cart.get_total_price }}</h2>
+            <div class="d-flex gap-2">
+                <a href="{% url 'products:list' %}" class="btn btn-outline-dark">Continue shopping</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'orders:checkout' %}" class="btn btn-brand">Checkout</a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="btn btn-brand">Login to checkout</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

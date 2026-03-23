@@ -3,9 +3,27 @@
 {% block title %}Welcome - ShopSphere{% endblock %}
 
 {% block content %}
-<div class="py-5 text-center">
-    <h1 class="display-6">Welcome to ShopSphere</h1>
-    <p class="text-muted">Your store is ready. Next we will add products and categories.</p>
-    <a class="btn btn-primary" href="{% url 'products:list' %}">Browse products</a>
-</div>
+<section class="hero">
+    <div class="row align-items-center">
+        <div class="col-lg-7">
+            <span class="badge-soft">Curated essentials</span>
+            <h1 class="mt-3">ShopSphere - your modern commerce hub.</h1>
+            <p class="text-muted fs-5">Discover products that feel handpicked, track orders easily, and keep your cart ready for checkout.</p>
+            <div class="d-flex flex-wrap gap-2 mt-4">
+                <a class="btn btn-brand" href="{% url 'products:list' %}">Browse products</a>
+                <a class="btn btn-outline-dark" href="{% url 'orders:history' %}">Track orders</a>
+            </div>
+        </div>
+        <div class="col-lg-5 mt-4 mt-lg-0">
+            <div class="section-card">
+                <h2 class="h5">Why customers return</h2>
+                <ul class="list-unstyled mb-0 text-muted">
+                    <li class="mb-2">Fast, consistent delivery updates</li>
+                    <li class="mb-2">Smart product recommendations</li>
+                    <li class="mb-0">Secure checkout with saved addresses</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

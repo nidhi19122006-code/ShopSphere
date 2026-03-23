@@ -3,40 +3,50 @@
 {% block title %}Products - ShopSphere{% endblock %}
 
 {% block content %}
-<div class="row mb-4">
+<div class="row g-4">
     <div class="col-lg-3">
-        <h2 class="h5">Categories</h2>
-        <div class="list-group">
-            <a class="list-group-item list-group-item-action {% if not selected_category %}active{% endif %}" href="{% url 'products:list' %}">All</a>
-            {% for category in categories %}
-                <a class="list-group-item list-group-item-action {% if selected_category == category.slug %}active{% endif %}" href="{% url 'products:category' category.slug %}">{{ category.name }}</a>
-            {% empty %}
-                <span class="list-group-item">No categories yet</span>
-            {% endfor %}
+        <div class="section-card">
+            <h2 class="h5">Categories</h2>
+            <div class="list-group mt-3">
+                <a class="list-group-item list-group-item-action {% if not selected_category %}active{% endif %}" href="{% url 'products:list' %}">All</a>
+                {% for category in categories %}
+                    <a class="list-group-item list-group-item-action {% if selected_category == category.slug %}active{% endif %}" href="{% url 'products:category' category.slug %}">{{ category.name }}</a>
+                {% empty %}
+                    <span class="list-group-item">No categories yet</span>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <div class="col-lg-9">
-        <form class="row g-2 mb-3" method="get">
-            <div class="col-sm-9">
-                <input type="text" name="q" class="form-control" placeholder="Search products" value="{{ search_query }}">
+        <div class="section-card mb-3">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
+                <div>
+                    <h1 class="h4 mb-1">All products</h1>
+                    <p class="text-muted mb-0">Browse the latest arrivals and best sellers.</p>
+                </div>
+                <form class="d-flex gap-2" method="get">
+                    <input type="text" name="q" class="form-control" placeholder="Search products" value="{{ search_query }}">
+                    <button class="btn btn-outline-dark" type="submit">Search</button>
+                </form>
             </div>
-            <div class="col-sm-3">
-                <button class="btn btn-outline-primary w-100" type="submit">Search</button>
-            </div>
-        </form>
+        </div>
 
         <div class="row g-3">
             {% for product in products %}
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card h-100">
+                    <div class="card product-card h-100">
                         {% if product.image %}
                             <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center bg-light" style="height: 180px;">
+                                <span class="text-muted small">No image</span>
+                            </div>
                         {% endif %}
                         <div class="card-body d-flex flex-column">
-                            <h3 class="h6 card-title">{{ product.name }}</h3>
-                            <p class="text-muted small mb-2">{{ product.category.name }}</p>
+                            <span class="badge-soft align-self-start">{{ product.category.name }}</span>
+                            <h3 class="h6 card-title mt-3">{{ product.name }}</h3>
                             <p class="fw-semibold mb-3">${{ product.price }}</p>
-                            <a href="{{ product.get_absolute_url }}" class="btn btn-sm btn-primary mt-auto">View details</a>
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-sm btn-brand mt-auto">View details</a>
                         </div>
                     </div>
                 </div>
